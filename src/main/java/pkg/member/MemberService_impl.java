@@ -48,14 +48,19 @@ public class MemberService_impl implements MemberService {
 		return memberdao.updatememberList(map);
 	}
 	@Override
-	public Map<String, Object> authList(Map<String, Object> map) {
+	public Map<String, Object> authList(Map<String, Object> map) { // 권한 보여주기
 		// TODO Auto-generated method stub
 		return memberdao.authList(map);
 	}
 	@Override
-	public String delmem(Map<String, Object> map) {
+	public String delmem(Map<String, Object> map) { // 회원탈퇴
 		// TODO Auto-generated method stub
 		return memberdao.delmem(map);
+	}
+	@Override
+	public Map<String, Object> delmemberList(Map<String, Object> map) {
+		System.out.println("delmemberList Service발동");
+		return memberdao.delmemberList(map);
 	}
 	
 	

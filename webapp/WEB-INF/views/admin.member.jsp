@@ -28,7 +28,7 @@
     <%@ include file="../comp/admin.header.jsp" %>
 		
 		<div >
-			<div class='cell'>억</div>
+			<div class='cell'><input type='checkbox' id="allchk"/></div>
 			<div class='cell'>회원ID</div>
 			<div class='cell'>회원프로필</div>	
 			<div class='cell'>회원닉네임</div>
@@ -55,7 +55,7 @@
 		</div>
 		
 		<div>
-			<input type="button" value = "삭제" onclick=""/>
+			<input type="button" value = "삭제" id="btndel"/>
 		</div>
 	
 
@@ -88,7 +88,7 @@
 						memberauth=this.memberauth;
 						
 						strHTML += "<div class='row' data-memberidx='"+this.memberidx +"'>";						
-						strHTML += "<div class='cell'>어후 </div>";
+						strHTML += "<div class='cell'><input type='checkbox' name='chk'/> </div>";
 						strHTML += "<div class='cell memberid'><input type='text' name='memberid' value='"+this.memberid+"' style='width:70px;' readonly/></div>";
 						strHTML += "<div class='cell memberprofile'><input type='text' name='memberprofile' value='"+this.memberprofile+"' style='width:70px;' readonly/></div>";
 						strHTML += "<div class='cell membernickname'><input type='text' name='membernickname' value='"+this.membernickname+"' style='width:70px;' readonly/></div>";
@@ -181,6 +181,8 @@
 					$(result.memberresult).each(function(){
 						memberauth = this.memberauth;
 						strHTML += "<div class='row' data-memberidx='"+this.memberidx +"'>";						
+						strHTML += "<div class='cell'><input type='checkbox' name='chk'/> </div>";
+						
 						strHTML += "<div class='cell memberid'><input type='text' name='memberid' value='"+this.memberid+"' style='width:70px;' readonly/></div>";
 						strHTML += "<div class='cell memberprofile'><input type='text' name='memberprofile' value='"+this.memberprofile+"' style='width:70px;' readonly/></div>";
 						strHTML += "<div class='cell membernickname'><input type='text' name='membernickname' value='"+this.membernickname+"' style='width:70px;' readonly/></div>";
@@ -294,6 +296,49 @@
 			  }
 		   })		   
 	   } 
+	   $("#allchk").click(function(){
+		 	if(this.checked){
+		 		$("input[name=chk]").prop("checked",true);
+		 		console.log("체크됨");
+		 	}
+		 	else{
+		 		$("input[name=chk]").prop("checked", false);
+		 		console.log("체크풀림");
+		 	}
+		 	
+		   
+		   
+	   })
+	   $("#btndel").click(function(){
+
+		   let row = document.querySelectorAll(".row");
+		   
+		   let delArray = [...row].map(function(e){
+			   let vo;
+			   if(e.querySelector("[name=chk]").checked){
+				 	vo ={
+				 		memberid : e.querySelector(".memberid > input").value
+				   
+						}
+				 	
+		   		}
+			   else{
+				   vo = null;
+			   }
+			   return vo;
+		   }).filter(e=>e);
+		   $.ajax({
+			 url:"memberlistdelete",
+			 data : JSON.stringify({ deldata : delArray}),
+			 type : "post",
+			 dataType : "json",
+			 contentType : "application/json",
+			 success : function(){
+				 console.log();
+				 
+			 }
+		   })		   
+	   })
 	   
 
     </script>

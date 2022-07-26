@@ -41,7 +41,7 @@
 			width:500px;
 		
 		}
-		.b{
+		.authdesc{
 		
 			width:490px;
 		}
@@ -58,7 +58,7 @@
     <div class="container section">
     
     	<div class="">
-    		<div class="cell">체크박스</div>
+    		<div class="cell"><input type="checkbox" class="allchk"/></div>
     		
     		<div class="cell">권한이름</div>
     		
@@ -77,7 +77,7 @@
     			<input type="button" value="추가" id="btnAdd"/>  			
     		</div>
     		<div>
-    			<input type="button" value="삭제"/>  			
+    			<input type="button" value="삭제" id="btnDel"/>  			
     		</div>
     		<div>
     			<input type="button" value="저장" id="btnSave"/>  			
@@ -100,9 +100,9 @@
     			console.log(result);
     			$(result).each(function(){
     				strHTML +="<div class='row' data-authidx='"+this.authidx +"' >";    				
-    				strHTML += '<div class="cell"><input type="text" id="authname" /></div>'; 	    		
-    				strHTML += '<div class="cell"><input type="text" id="authname" value="'+this.authname + '"/></div>';
-    				strHTML += '<div class="cell a"><input class="b" type="text" id="authdesc" value="'+this.authdesc + '"/></div>';
+    				strHTML += '<div class="cell"><input type="checkbox" name="chkbox" /></div>'; 	    		
+    				strHTML += '<div class="cell"><input class="authname" type="text" name="authname" value="'+this.authname + '"/></div>';
+    				strHTML += '<div class="cell a"><input class="authdesc" type="text" name="authdesc" value="'+this.authdesc + '"/></div>';
     				strHTML += '<div class="cell hidden"> <input name="hidden" type="text"/> </div>';
     				strHTML +="</div>";
 
@@ -119,12 +119,12 @@
     })
     $("#btnAdd").click(function(){
 		var strHTML ="";
-		strHTML +="<div class='input-wrapper'>";
-			strHTML += '<div class="cell"><input type="text" id="authname" /></div>';
-			strHTML += '<div class="cell"><input type="text" id="authname" /></div>';
-			strHTML += '<div class="cell a"><input class="b" type="text" id="authdesc" /></div>';
-			strHTML += '<div><input type="hidden" name="hidden"/> </div>';
-		strHTML +="</div>";
+		strHTML +="<div class='row'>";
+			strHTML += '<div class="cell"><input type="checkbox" name="chkbox" /></div>';
+			strHTML += '<div class="cell"><input class="authname" type="text" name="authname" /></div>';
+			strHTML += '<div class="cell a"><input class="authdesc" type="text" name="authdesc" /></div>';
+			strHTML += '<div class="cell hidden"> <input name="hidden" type="text"/> </div>';
+	    strHTML +="</div>";
 
     	$(".addinput-wrapper").append(strHTML);
     })
@@ -133,6 +133,35 @@
 		$(event.target).parents(".row").find(".hidden > input").val("U");
 	
     });
+    
+    $(".allchk").on("click", function(){
+    	
+    	if(this.checked){
+    		$("input[name=chkbox]").prop("checked",true);
+    		console.log("체크");
+    	}else{
+     		$("input[name=chkbox]").prop("checked",false);
+     	    console.log("체크해제");	
+    	}
+    })
+    $("#btnDel").click(function(){
+    	if(document.querySelector(".allchk").checked){
+    		
+    	}
+    	
+    	let row = document.querySelectorAll(".row");
+    	
+		let voArray = [...row].map(function(e){
+		let  vo;
+			if(e.querySelector(".hidden > input").value==="U"){
+				console.log(e.querySelector(".authname > input").value);
+				console.log(e.querySelector(".authdesc > input").value);
+						
+			
+			}
+		})
+    
+    })
     
     
     

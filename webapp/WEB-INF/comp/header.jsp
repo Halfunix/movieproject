@@ -32,10 +32,7 @@
 	        		<div class="menu logout"><a href="logout">로그아웃</a></div>
 	        	</div>
 	        </div>
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/sangjin
         <%} %>
         	
         </div>

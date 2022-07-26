@@ -67,8 +67,7 @@ public class MemberController_JSON {
 		return "{\"result\": \"FAIL\" }";
 		
 	}
-<<<<<<< HEAD
-=======
+
 	//회원탈퇴
 	@PostMapping("membersecsession")
 	public String membersec(@RequestBody Map<String,Object> map ,HttpServletRequest request) {
@@ -84,7 +83,6 @@ public class MemberController_JSON {
 
 	// 회원정보수정(회원용)
 
->>>>>>> origin/sangjin
 	@PostMapping("myform") // profile // profile?memberId=this9999
 	public String myform(@RequestBody Map<String,Object> map) {
 		List<MemberVO> memlist = (List<MemberVO>)memberService.selmem(map);
@@ -271,7 +269,13 @@ public class MemberController_JSON {
 		}
 		return jarr.toString();
 	}
-	
+	@PostMapping("memberlistdelete")
+	public String memberlistdel (@RequestBody Map<String, Object> map) {
+		System.out.println("cmemberlist delete controoler");
+		memberService.delmemberList(map);
+		
+		return "";
+	}
 	
 	
 }

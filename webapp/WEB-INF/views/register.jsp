@@ -251,7 +251,6 @@
 					}
 					else{
 						document.querySelector("div#msg").innerHTML="중복된 아이디입니다.";
-						document.querySelector("input#ida").value="";
 									
 					}
 				},

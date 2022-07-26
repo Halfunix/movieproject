@@ -13,6 +13,7 @@ public interface MemberDAO {
 	public Map<String, Object>  showmemberList(Map<String, Object> map); // 멤버정보(관리자페이지)
 	public Map<String, Object> updatememberList(Map<String, Object> map);// 멤버정보수정(관리자페이지)
 	public Map<String, Object> authList(Map<String, Object> map); //권한정보(관리자페이지)
+	public Map<String, Object> delmemberList(Map<String, Object> map);//회원탈퇴(관리자페이지)
 	
 	
 	

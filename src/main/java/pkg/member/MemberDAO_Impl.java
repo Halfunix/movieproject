@@ -2,9 +2,12 @@ package pkg.member;
 
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -90,8 +93,9 @@ public class MemberDAO_Impl implements MemberDAO{
 		System.out.println("update dao 발동");
 		for(Map<String, Object> member : members) {
 			sqlSessionTemplate.selectList("updatememlist",member);
-			System.out.println("업데이트발동");
+			
 		}
+		
 		
 		return null;
 	}
@@ -103,6 +107,24 @@ public class MemberDAO_Impl implements MemberDAO{
 		System.out.println(map);
 		System.out.println("---------");
 		return map;
+	}
+
+	@Override
+	public Map<String, Object> delmemberList(Map<String, Object> map) {
+		List<Map<String, Object>> delmemlist = (List<Map<String, Object>>) map.get("deldata");
+		Map<String, Object> result = new HashMap<>() ;
+		for(Map<String, Object> member : delmemlist) {
+			sqlSessionTemplate.selectList("delmem",member);
+			System.out.println("------------");
+			System.out.println(member);
+			System.out.println(member.get("result"));
+			result.put("result", member.get("result"));
+			System.out.println("-----------");
+		}
+		System.out.println(result);
+		
+		
+		return result;
 	}
 
 	

@@ -9,10 +9,7 @@
 <body>
 
     <%@ include file="../comp/header.jsp" %>
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/sangjin
     <div class="container-section">
 
         <div class="container">

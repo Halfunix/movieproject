@@ -78,14 +78,7 @@
     		location.href="register";
     	}
   		var Yaho = function(){
-<<<<<<< HEAD
-
   			location.href=document.referrer;
-
-=======
-  			location.href=document.referrer;
-
->>>>>>> origin/sangjin
   		}
   	</script>
     
