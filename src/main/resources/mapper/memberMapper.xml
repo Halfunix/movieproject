@@ -84,12 +84,12 @@
  	
  	</select>
  	<!-- 멤버수정 (관리자페이지) -->
-	<select statementType="CALLABLE" parameterType="pkg.member.MemberVO" id="updatememlist" resultMap="memberMap">
+	<select statementType="CALLABLE" parameterType="pkg.member.MemberVO" id="updatememlist" >
 	{
 		call PKG_MEMBER.PROC_MEMBER_ADMIN_UPDATE (
 			#{memberid, jdbcType = VARCHAR, mode = IN}
 			,#{memberauth, jdbcType = VARCHAR, mode = IN}			
-			,#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=memberMap}
+			,#{result, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}		
 			,#{error, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
 			,#{error2, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
 		)
@@ -116,6 +116,7 @@
 				#{pagenum, jdbcType = VARCHAR, mode = IN}
 				,#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=authmemberMap}
 				,#{maxpage, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+				,#{memcnt, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
 				,#{error, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
 				,#{errormsg, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
 			)

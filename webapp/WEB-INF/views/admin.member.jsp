@@ -48,7 +48,10 @@
 		<div id="container-change" style="clear:both">
 			
 		</div>
-		
+		<div>
+			<div>총인원 : <input type="text" id="memcnt"/> </div>
+			
+		</div>
 	
 		<div>
 			<input type="button" value = "수정" onclick="btnUpdate()"/>
@@ -65,14 +68,10 @@
     <%@ include file="../comp/footer.jsp" %>
     
     <script>
-      
-    	
+      	let nowPage;
+      	let memcnt;
 		$(document).ready(function(){
-			if($("#pageNum").val() ==1){
-				$("input#btndown").attr("disabled","true");
-			}
-	    	console.log($("#pageNum").val());
-	    	$.ajax({  
+			$.ajax({  
 	    		url : "memberform",
 	    		data: JSON.stringify({ pagenum : '1'  	}),
 	    		type : "post", //post or get
@@ -80,12 +79,16 @@
 				dataType : "json",
 				contentType : "application/json",
 				success : function(result){
+					nowPage = 1;
 					var strHTML = "";
 					var strPageHTML = "";
 					var memberauth = "";	
+					memcnt = result.memcnt;
+					console.log(memcnt);
 					console.log(result);
 					$(result.memberresult).each(function(){
 						memberauth=this.memberauth;
+						
 						
 						strHTML += "<div class='row' data-memberidx='"+this.memberidx +"'>";						
 						strHTML += "<div class='cell'><input type='checkbox' name='chk'/> </div>";
@@ -126,12 +129,13 @@
 					}
 					
 					else{
-						strPageHTML += "<div> ";
-						
+						strPageHTML += "<div> <a href='#' onclick ='chkpage(1)'> < </a> ";						
+										
 						for(var i=1; i<=result.maxpage;i++){
 							strPageHTML += "<a href='#' onclick='chkpage("+ i +")'>" + i+" </a> ";
 						}
-							strPageHTML += "</div> ";
+						strPageHTML += " <a href='#' onclick ='chkpage("+ (Number(result.maxpage)) +")'> > </a>";
+						strPageHTML += "</div> ";
 							
 					}
 					
@@ -139,6 +143,7 @@
 				
 					$("#pagemaxNum").val(result.maxpage);
 					$("div#memberform").html(strHTML);
+					$("#memcnt").val(memcnt);
 					
 					
 				},
@@ -152,6 +157,7 @@
 	    	
 	    })
     	var chkpage = function(e){
+			nowPage = e;
 			console.log("현재페이지 : " + e + "페이지");
 			var pagMaxNum =0;
 			var pagMinNum =0;
@@ -175,6 +181,7 @@
 				dataType : "json",
 				contentType : "application/json",
 				success : function(result){
+					memcnt = result.memcnt;
 					var strPageHTML = "";
 					var strHTML = "";
 					var memberauth = "";
@@ -236,6 +243,8 @@
 					
 					$("div#memberform").html(strHTML);
 					$("#container-change").html(strPageHTML);
+					$("#memcnt").val(memcnt);
+					
 					
 				},
 				error : function(){
@@ -279,7 +288,6 @@
 			   }
 			   return vo;
 		   }).filter(e=>e);
-		   console.log(voArray);
 		   $.ajax({
 			   
 		      url : "memberlistupdate",
@@ -289,7 +297,14 @@
 			  dataType : "json",
 			  contentType : "application/json",
 			  success : function(result){
-				  conosole.log(suc);
+			
+				  if(result.result=='SUC'){
+					  console.log("성공하셨습니다.");
+					  chkpage(nowPage);
+				  }
+				  else{
+					  console.log("삭제되었습니다.");
+				  }
 			  },
 			  error : function(error){
 				  console.log(error);
@@ -333,8 +348,13 @@
 			 type : "post",
 			 dataType : "json",
 			 contentType : "application/json",
-			 success : function(){
+			 success : function(result){
 				 console.log();
+				 chkpage(nowPage);
+				 
+			 },
+			 error: function(error){
+				 console.log(error);
 				 
 			 }
 		   })		   

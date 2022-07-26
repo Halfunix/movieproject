@@ -116,7 +116,7 @@ public class MemberController_JSON {
 		System.out.println("-------");
 		return obj.toString();
 	}
-	
+	//일반 페이지 회원수정
 	@PostMapping("updatemember")
 	public String updateprofile(@RequestBody Map<String,Object> map) {
 		System.out.println("----update controller");
@@ -181,10 +181,11 @@ public class MemberController_JSON {
 			System.out.println("------jsoncontroller");
 			resultobj.add("memberresult", memberarr);
 			resultobj.addProperty("maxpage", (String) map.get("maxpage"));
+			resultobj.addProperty("memcnt",(String) map.get("memcnt"));
 			resultobj.add("authresult", autharr);
 			System.out.println(autharr);
 			System.out.println(map.get("maxpage"));
-			
+			 
 		return resultobj.toString();
 		
 	}
@@ -243,10 +244,10 @@ public class MemberController_JSON {
 	//회원정보 수정 (관리자페이지)
 	@PostMapping("memberlistupdate")
 	public String memberlistUpdate(@RequestBody Map<String,Object> map) {
-		System.out.println(map);
-		memberService.updatememberList(map);
 		
-		return "";
+		Map<String, Object> result = memberService.updatememberList(map);
+		
+		return new Gson().toJson(result);
 	}
 	@PostMapping("auth") // 권한리스트(관리자페이지)
 	public String authlistSel(@RequestBody Map<String, Object> map) {
@@ -272,9 +273,9 @@ public class MemberController_JSON {
 	@PostMapping("memberlistdelete")
 	public String memberlistdel (@RequestBody Map<String, Object> map) {
 		System.out.println("cmemberlist delete controoler");
-		memberService.delmemberList(map);
+		Map<String, Object> result =memberService.delmemberList(map);
 		
-		return "";
+		return new Gson().toJson(result);
 	}
 	
 	

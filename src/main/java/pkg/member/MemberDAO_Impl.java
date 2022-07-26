@@ -90,14 +90,26 @@ public class MemberDAO_Impl implements MemberDAO{
 		
 		
 		List<Map<String, Object>> members = (List<Map<String, Object>>)map.get("data");
-		System.out.println("update dao 발동");
+		System.out.println("update dao 발동 rkskek");
+		Map<String, Object> result = new HashMap<>() ;
 		for(Map<String, Object> member : members) {
 			sqlSessionTemplate.selectList("updatememlist",member);
+			System.out.println(member.get("result"));
+			System.out.println(member.get("memberid"));
+			
+			if(member.get("result").equals("FAIL")){
+				result.put("memberid",member.get("memberid"));
+				result.put("result",member.get("result"));
+			}else {
+				result.put("result",member.get("result"));
+							
+			}
 			
 		}
+		System.out.println(result);
 		
 		
-		return null;
+		return result;
 	}
 	
 	@Override
@@ -110,19 +122,22 @@ public class MemberDAO_Impl implements MemberDAO{
 	}
 
 	@Override
-	public Map<String, Object> delmemberList(Map<String, Object> map) {
+	public Map<String, Object> delmemberList(Map<String, Object> map) { // 회원 삭제
 		List<Map<String, Object>> delmemlist = (List<Map<String, Object>>) map.get("deldata");
 		Map<String, Object> result = new HashMap<>() ;
 		for(Map<String, Object> member : delmemlist) {
 			sqlSessionTemplate.selectList("delmem",member);
-			System.out.println("------------");
-			System.out.println(member);
-			System.out.println(member.get("result"));
-			result.put("result", member.get("result"));
-			System.out.println("-----------");
+			
+			if(member.get("result").equals("FAIL")){
+				result.put("memberid",member.get("memberid"));
+				result.put("result","FAIL");
+			}else {
+				result.put("result","SUC");
+			}
+				
+			
 		}
-		System.out.println(result);
-		
+
 		
 		return result;
 	}
